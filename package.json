@@ -2,18 +2,27 @@
   "name": "rag-worldbuilder",
   "version": "1.0.0",
   "main": "dist/orchestrator.js",
+  "type": "module",
   "scripts": {
-    "start": "ts-node src/orchestrator.ts",
-    "build": "tsc"
+    "start": "node --loader ts-node/esm src/orchestrator.ts",
+    "build": "tsc",
+    "db": "npm run chroma",
+    "migrate": "node --loader ts-node/esm src/migrations/01.ts",
+    "reset": "node --loader ts-node/esm src/migrations/reset.ts"
   },
   "dependencies": {
-    "openai": "4.96.0",
-    "chromadb": "2.3.0",
     "better-sqlite3": "11.9.1",
-    "dotenv": "16.5.0"
+    "chromadb": "^2.3.0",
+    "chromadb-default-embed": "^2.14.0",
+    "dotenv": "16.5.0",
+    "openai": "4.96.0"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
     "ts-node": "10.9.2",
     "typescript": "5.8.3"
+  },
+  "ts-node": {
+    "esm": true
   }
 }
