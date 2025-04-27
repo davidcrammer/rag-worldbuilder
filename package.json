@@ -1,0 +1,19 @@
+{
+  "name": "rag-worldbuilder",
+  "version": "1.0.0",
+  "main": "dist/orchestrator.js",
+  "scripts": {
+    "start": "ts-node src/orchestrator.ts",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "openai": "4.96.0",
+    "chromadb": "2.3.0",
+    "better-sqlite3": "11.9.1",
+    "dotenv": "16.5.0"
+  },
+  "devDependencies": {
+    "ts-node": "10.9.2",
+    "typescript": "5.8.3"
+  }
+}
