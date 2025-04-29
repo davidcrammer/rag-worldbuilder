@@ -21,24 +21,20 @@ async function main() {
   // let worldOverview = `The city of New Caspian is an intriguing place. It appears on the surface to be like any other quaint island town, laid back, vacation time, but digging deeper reveals some interesting stories and people and interesting industry`
 
   let worldOverview =
-    "he city of New Caspian is an intriguing place. It appears on the surface to be like any other quaint island town, laid back, vacation time, but digging deeper reveals some interesting stories and people."
+    "The city of New Caspian is a cool island city and nation in the Pacitic. It is a quaint island town, laid back, vacation time, also has many interesting stories and people."
 
   await initializeChroma()
 
   for (let i = 0; i < 10000; i++) {
     console.log(`Iteration ${i + 1}`)
-    const prompt = await generateMetaPrompt(worldOverview)
+    const { character, prompt } = await generateMetaPrompt()
 
     print("Generated prompt:", prompt)
 
     const relevant = await retrieveRelevantLore(prompt)
-    print("Retrieved relevant lore:")
-    relevant.forEach((r) => {
-      console.log(c.cyan(r.id), "-", r.content)
-    })
 
     const context = relevant.map((r) => r.content)
-    const { id, content } = await expandLore(worldOverview + prompt, context)
+    const { id, content } = await expandLore(prompt, context, character)
 
     print("Expanded lore:", content)
 

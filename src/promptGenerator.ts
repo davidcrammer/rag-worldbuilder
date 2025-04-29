@@ -83,7 +83,7 @@ const promptsv2 = [
   "Expand on the previously described medical practices, superstitions, or healing methods.",
 ]
 
-const prompts = [
+const promptsv3 = [
   "Write a social media post revealing a surprising detail about an existing character.",
   "Summarize a viral post or thread based on something that happened in the world.",
   "Share a photo caption or story post that gives more details about an established location.",
@@ -142,24 +142,232 @@ const prompts = [
   "Write a nostalgic farewell post as a traveler leaves a city they've grown attached to.",
 ]
 
-export async function generateMetaPrompt(worldOverview: string): Promise<string> {
-  // const resp = await openaiMeta.chat.completions.create({
-  //   model: META_MODEL,
-  //   messages: [
-  //     { role: "system", content: "You are a creative AI that generates new world-building prompts." },
-  //     { role: "user", content: `Based on the following world summary, suggest the next area to develop:\n${worldOverview}` },
-  //   ],
-  //   max_tokens: 100,
-  // })
-  // let content = resp.choices[0].message.content ?? ""
-  // content = content.trim()
+const prompts = [
+  "Write something on the topic of a political scandal making headlines.",
+  "Write something on the topic of a controversy a politician or leader is trying to cover up.",
+  "Write something on the topic of a protest or movement gaining momentum among citizens.",
+  "Write something on the topic of leaked information shaking up the political world.",
+  "Write something on the topic of an absurd law or political decision being mocked online.",
+  "Write something on the topic of a new home trend or tradition gaining popularity.",
+  "Write something on the topic of a household disaster or mishap going viral.",
+  "Write something on the topic of a family drama story circulating on social media.",
+  "Write something on the topic of a cozy or quirky home life moment being shared.",
+  "Write something on the topic of a parenting story or family tradition capturing attention.",
+  "Write something on the topic of an obscure hobby suddenly trending across communities.",
+  "Write something on the topic of a crafting or gaming project being proudly or hilariously shown off.",
+  "Write something on the topic of competitive hobby drama or a scandal people are gossiping about.",
+  "Write something on the topic of an unexpected new pastime taking over a city or culture.",
+  "Write something on the topic of a strange collection or personal obsession going viral.",
+  "Write something on the topic of a new song or album causing a stir online.",
+  "Write something on the topic of a music feud or collaboration sparking debates among fans.",
+  "Write something on the topic of an underground artist breaking into mainstream fame.",
+  "Write something on the topic of a music event or concert meltdown trending online.",
+  "Write something on the topic of lyrics or a music video causing people to theorize hidden meanings.",
+  "Write something on the topic of a video game update, controversy, or tournament causing an uproar.",
+  "Write something on the topic of a gaming glitch, exploit, or drama making players furious.",
+  "Write something on the topic of a fictional in-world game players are obsessed with.",
+  "Write something on the topic of a streamer moment or esports event blowing up on social media.",
+  "Write something on the topic of a fandom war or rivalry dominating online discussions.",
+  "Write something on the topic of a bizarre conspiracy theory gaining traction online.",
+  "Write something on the topic of a prank, challenge, or trend taking over the internet.",
+  "Write something on the topic of an internet influencer feud or scandal people are obsessing over.",
+  "Write something on the topic of a tech failure or internet outage causing chaos.",
+  "Write something on the topic of a clickbait headline or misinformation story causing confusion.",
+  "Write something on the topic of a celebrity scandal or rumor dominating the news.",
+  "Write something on the topic of a surprising celebrity moment or relationship twist going viral.",
+  "Write something on the topic of a once-famous figure experiencing a comeback or fall from grace.",
+  "Write something on the topic of private celebrity messages or leaks being shared widely.",
+  "Write something on the topic of a celebrity endorsement or marketing fail being mocked.",
+  "Write something on the topic of a fan theory connecting pop culture to deeper political or cultural meanings.",
+  "Write something on the topic of an unexpected hobby, trend, or technology reshaping society.",
+  "Write something on the topic of a travel blog or influencer post offering a strange view into everyday life somewhere else.",
+  "Write something on the topic of a survival guide or advice thread going viral after someone is canceled or caught in drama.",
+  "Write something on the topic of a home-cooked meal disaster story or funny cooking moment trending online.",
+  "Write something on the topic of a new cultural ritual, tradition, or event gaining international fame.",
+  "Write something on the topic of a major festival, holiday, or public event capturing worldwide attention.",
+  "Write something on the topic of a historical event being reexamined or mocked through memes today.",
+  "Write something on the topic of a piece of art, literature, or music from the past inspiring a viral trend.",
+  "Write something on the topic of a dark underbelly of a city, hobby, or fandom being exposed.",
+  "Write something on the topic of a travel horror story, unexpected kindness, or weird detour being shared.",
+  "Write something on the topic of a heartfelt reflection post about leaving a place, job, or community behind.",
+  "Write something on the topic of a new slang, phrase, or meme format spreading rapidly among users.",
+  "Write something on the topic of a wildlife encounter, natural disaster, or environmental issue trending in travel posts.",
+]
 
-  // const chosenPrompt = prompts[Math.floor(Math.random() * prompts.length)]
+export type HandleProfile = {
+  name: string
+  handle: string
+  description: string
+}
 
-  // content = `"${content}". Based on this, ${chosenPrompt}`
+export const handles: HandleProfile[] = [
+  {
+    name: "Cal Brennan",
+    handle: "@silverdrift",
+    description:
+      "A New Caspian ferry worker with deadpan humor who treats daily chaos like mildly annoying weather. Lives with his aunt, brews his own terrible beer, and writes rejection letters to fake job offers for fun.",
+  },
+  {
+    name: "Nina Rowe",
+    handle: "@pebblevault",
+    description:
+      "An amateur beachcomber who posts with quiet absurdity, treating mundane finds like ancient relics. Keeps a spreadsheet of all found items, owns three identical windbreakers, and dreams of opening a museum for 'worthless treasures.'",
+  },
+  {
+    name: "Dr. Simon Vane",
+    handle: "@thirdlighthouse",
+    description:
+      "A washed-up academic who buries sharp political satire under layers of fake historical trivia. Collects rare stamps, takes weekly walks with an invisible dog named Horace, and still tries to teach 'guerrilla history' classes to uninterested passersby.",
+  },
+  {
+    name: "Rowan Mace",
+    handle: "@mirrorgait",
+    description:
+      "A wanderer with a dry, ironic voice who thinks they're cool, but is not at all. Lives out of a backpack, is weirdly good at whittling, and hosts imaginary TED talks while camping alone.",
+  },
+  {
+    name: "Dane Whitlock",
+    handle: "@corkandsteam",
+    description:
+      "An ex-ship mechanic who posts greasy wisdom, bar jokes, and slightly dangerous DIY advice. Sleeps in a hammock, volunteers at the scrapyard on weekends, and is building a motorbike out of salvaged boat parts.",
+  },
+  {
+    name: "Mila Stroud",
+    handle: "@kettlethief",
+    description:
+      "A portside thief-turned-meme-lord with an outrageous sense of humor, mixing crime confessions with cute cat pictures. Shares a flat with four cats and one mysterious roommate named ‘Mop’, and sells black-market candy out of a vending machine.",
+  },
+  {
+    name: "Tanner Keene",
+    handle: "@lowtidepress",
+    description:
+      "A self-declared 'citizen journalist' — undercuts serious world news with vicious, well-placed punchlines. Drinks nothing but instant coffee, maintains a conspiracy corkboard for fun, and wears sunglasses indoors to 'protect against surveillance.'",
+  },
+  {
+    name: "Sasha Wren",
+    handle: "@mosswindow",
+    description:
+      "A dreamily sarcastic café server who posts melancholy art photos and snarky customer commentary. Keeps a sketchbook full of doodled overheard conversations, lives above the café, and dreams of escaping to a nonexistent island.",
+  },
+  {
+    name: "Leo Hart",
+    handle: "@foldedhorizon",
+    description:
+      "An earnest young backpacker who keeps stumbling into conspiracies, documented through increasingly unhinged optimism. Travels with a journal, a slingshot, and one sock always missing. Still believes every wrong turn is 'fate.'",
+  },
+  {
+    name: "Clint Reyes",
+    handle: "@straycurrent",
+    description:
+      "An electrical worker whose humor is short-circuited into dad jokes, bad puns, and grim accident stories. Has a pet iguana named Circuit, records his dreams in Morse code, and once tried to install Christmas lights permanently on his house.",
+  },
+  {
+    name: "Tessa Rourke",
+    handle: "@parcelwolf",
+    description:
+      "A courier with lightning-fast wit and a tendency to roast entire neighborhoods in three words or less. Owns seventeen different satchels, refuses to use GPS out of principle, and writes anonymous love letters to buildings she admires.",
+  },
+  {
+    name: "Vera Quinn",
+    handle: "@bonereef",
+    description:
+      "A grim dockside poet who posts elegant laments one moment, then absolutely savage takes the next. Lives in a converted shipping container, plays cello in the evenings, and keeps a ledger titled 'People Who Talk Too Loudly.'",
+  },
+  {
+    name: "Jax Monroe",
+    handle: "@gripetrap",
+    description:
+      "A snack cart owner who posts passive-aggressive food reviews of rival vendors disguised as 'taste testing adventures'. Keeps a secret spice blend in a hollowed-out pepper grinder, watches soap operas religiously, and hosts secret midnight cook-offs.",
+  },
+  {
+    name: "Mira Solis",
+    handle: "@pennydusk",
+    description:
+      "A quiet but cutting art student posting strange, funny sketches that roast the world without speaking directly. Has a pet snail named Orbit, lives in a rented attic with no windows, and uses disposable cameras religiously.",
+  },
+  {
+    name: "Eli Sparks",
+    handle: "@harbormarble",
+    description:
+      "A tourist stuck in New Caspian after losing his passport, posting about the absurdity of it all. Has been wearing the same jeans for three weeks, befriended a seagull named Captain, and invented a fictional 'Embassy of the Lost.'",
+  },
+  {
+    name: "Jonas 'Joey' Creed",
+    handle: "@ghostcradle",
+    description:
+      "A local bar owner who posts dumb jokes and bad puns, but also captures the city's weirdest moments. Sleeps in the bar’s back room, keeps a record of regulars’ weirdest drink orders, and officiates unofficial weddings after last call.",
+  },
+  {
+    name: "Poppy Vance",
+    handle: "@sunspill",
+    description:
+      "An overenthusiastic travel vlogger with chaotic good energy and a knack for posting heartwarmingly bad selfies. Carries a stuffed fox for 'good luck,' talks to statues when bored, and records voice memos to her future self.",
+  },
+  {
+    name: "Miles Graft",
+    handle: "@undercutanchor",
+    description:
+      "A burned-out sailor whose bitter jokes about bureaucracy, storms, and breakups hide rare flashes of affection. Secretly writes romance novels under a pen name and dreams of owning a lighthouse.",
+  },
+  {
+    name: "Cass Weaver",
+    handle: "@lintandbrine",
+    description:
+      "A street vendor with the sly, mischievous humor of someone always one step ahead of customers and cops. Sleeps in a storage unit, hustles fake 'rare antiques,' and plays harmonica badly but proudly.",
+  },
+  {
+    name: "Ivy Holt",
+    handle: "@orbitalweeds",
+    description:
+      "An amateur botanist-slash-smuggler whose posts accidentally blend plant facts with criminal activity and absurd memes. Runs a secret rooftop greenhouse and names plants after ex-lovers.",
+  },
+  {
+    name: "Bennett Shaw",
+    handle: "@blinktower",
+    description:
+      "A bored clerk in New Caspian's labyrinthine administration who posts increasingly surreal office stories. Runs an underground zine called 'Bureaucracy and Other Natural Disasters.'",
+  },
+  {
+    name: "Felix Dare",
+    handle: "@crookedsundial",
+    description:
+      "A local eccentric blending whimsical aphorisms with razor-sharp insults, never explaining when he's joking. Claims to have invented three imaginary sports and refuses to use the same route twice in a week.",
+  },
+  {
+    name: "Nora Pike",
+    handle: "@hollowwake",
+    description:
+      "A nightwatch security guard who narrates chill nighttime scenes with dry wit. Builds miniature ships in bottles during shifts and leaves anonymous haikus in abandoned alleyways.",
+  },
+  {
+    name: "Vic Calder",
+    handle: "@dockworm",
+    description:
+      "A scrap scavenger whose humor is proudly crude, brilliantly dumb, and occasionally philosophical by accident. Hosts a weekly 'junkyard salon' for out-of-work poets and conspiracy theorists.",
+  },
+]
 
-  // return content
-
+export async function generateMetaPrompt(): Promise<{
+  prompt: string
+  character: HandleProfile
+}> {
   const chosenPrompt = prompts[Math.floor(Math.random() * prompts.length)]
-  return chosenPrompt
+
+  // Randomly select a handle
+  const randomHandleIndex = Math.floor(Math.random() * handles.length)
+  const character = handles[randomHandleIndex]
+  const randomDate = new Date(Date.now() - Math.floor(Math.random() * 365 * 24 * 60 * 60 * 1000))
+  const randomTimestamp = randomDate.toISOString().replace(/T/, " ").replace(/\..+/, "")
+  const randomLikes = Math.floor(Math.random() * 1000)
+  const randomReposts = Math.floor(Math.random() * 100)
+  const randomComments = Math.floor(Math.random() * 100)
+
+  const prompt = `Today is ${randomDate} at ${randomTimestamp} 
+  
+  This post should be from the handle ${character.handle}
+  This post should have ${randomLikes} likes, ${randomReposts} reposts, and ${randomComments} comments.
+  
+  ${chosenPrompt}`
+
+  return { prompt, character }
 }
